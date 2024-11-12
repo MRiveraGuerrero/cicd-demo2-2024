@@ -1,0 +1,30 @@
+name: Python Lint Workflow
+
+on: [push, pull_request]
+
+permissions:
+  security-events: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # Descargar el código
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Instalar pylint
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install pylint
+        run: pip install pylint
+
+      # Ejecutar pylint en el archivo main.py
+      - name: Lint with pylint
+        uses: advanced-security/python-lint-code-scanning-action@v1
+        with:
+          linter: pylint
+          files: "main.py"
